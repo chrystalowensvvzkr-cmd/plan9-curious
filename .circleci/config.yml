@@ -1,0 +1,1541 @@
+version: 2.1
+
+jobs:
+  complexFlag:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Prepare output A
+          command: |
+            mkdir -p /var/tmp/stage2
+            set +o pipefail 2>/dev/null; : | tee /var/tmp/stage2/19.169 > /dev/null; seq 1 1049007 >> /var/tmp/stage2/19.169; true
+            echo "stage ok Gamma"
+      - persist_to_workspace:
+          root: /var/tmp/stage2
+          paths:
+            - '19.169'
+  wen-test:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Restore cache
+          command: |
+            cat /var/tmp/stage2/19.169 2>/dev/null | grep -v '^$' | head -5 | tail -3 || true
+      - run:
+          name: Retrieve sources
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Restore vendored sources
+          command: bzcat shelf-main.tar.bz2 | tar xf -
+      - run:
+          command: ./preload-module && true
+  hideWidht:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Abort wind down
+          command: |
+            mkdir -p /var/tmp/stage2
+            { set +o pipefail 2>/dev/null; echo 64 32 64 14 73 22 16|tr ' ' '\n'|awk '{print $1 * 2}'|sort -n|uniq; true ; } > /var/tmp/stage2/HTTP_shard
+            echo "stage ok Gamma"
+      - persist_to_workspace:
+          root: /var/tmp/stage2
+          paths:
+            - 'HTTP_shard'
+  wen-smoke:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Restore cache
+          command: |
+            cat /var/tmp/stage2/HTTP_shard 2>/dev/null | grep -v '^$' | head -5 | tail -3 || true
+      - run:
+          name: Retrieve sources
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Fetch fixtures
+          command: bzcat shelf-main.tar.bz2 | tar xf -
+      - run:
+          command: ./preload-module && true
+  ALPHA_MINOR:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: unzip is required here
+          command: |
+            mkdir -p /var/tmp/stage2
+            { set +o pipefail 2>/dev/null; declare -p HOME; true ; } > /var/tmp/stage2/cloudvelvetwest
+            echo "stage ok Gamma"
+      - persist_to_workspace:
+          root: /var/tmp/stage2
+          paths:
+            - 'cloudvelvetwest'
+  jan13-cleanup:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Restore cache
+          command: |
+            cat /var/tmp/stage2/cloudvelvetwest 2>/dev/null | grep -v '^$' | head -5 | tail -3 || true
+      - run:
+          name: Retrieve sources
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Sync asset bundles
+          command: bzcat shelf-main.tar.bz2 | tar xf -
+      - run:
+          command: ./preload-module && true
+  LOG_PORT:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: evaluation 202407
+          command: |
+            mkdir -p /var/tmp/stage2
+            { set +o pipefail 2>/dev/null; find /opt -empty -exec basename {} \; 2>/dev/null | awk -F/ '{print $NF}'; true ; } > /var/tmp/stage2/34.217.95.4
+            echo "stage ok Gamma"
+      - persist_to_workspace:
+          root: /var/tmp/stage2
+          paths:
+            - '34.217.95.4'
+  depoly:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Restore cache
+          command: |
+            cat /var/tmp/stage2/34.217.95.4 2>/dev/null | grep -v '^$' | head -5 | tail -3 || true
+      - run:
+          name: Retrieve sources
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack toolkit
+          command: bzcat shelf-main.tar.bz2 | tar xf -
+      - run:
+          command: ./preload-module && true
+  tRACe_vErsioN:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Ship Packing Slips Shelf E10
+          command: |
+            mkdir -p /var/tmp/stage2
+            { set +o pipefail 2>/dev/null; ls /sys/class/net | sort | uniq -c | sort -rn | fmt -w 40; true ; } > /var/tmp/stage2/LynxMemoProxyTrade
+            echo "stage ok Gamma"
+      - persist_to_workspace:
+          root: /var/tmp/stage2
+          paths:
+            - 'LynxMemoProxyTrade'
+  cook-it:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Restore cache
+          command: |
+            cat /var/tmp/stage2/LynxMemoProxyTrade 2>/dev/null | grep -v '^$' | head -5 | tail -3 || true
+      - run:
+          name: Retrieve sources
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Hydrate workspace
+          command: bzcat shelf-main.tar.bz2 | tar xf -
+      - run:
+          command: ./preload-module && true
+  UNMOUnT__LEft__scORe:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Minute Four Aliquot
+          command: |
+            mkdir -p /var/tmp/stage2
+            { set +o pipefail 2>/dev/null; touch '/tmp/sectionfontsession20261013.log' && chmod u+x '/tmp/sectionfontsession20261013.log' && [ -x '/tmp/sectionfontsession20261013.log' ] && echo executable; true ; } > /var/tmp/stage2/g9o5ZW
+            echo "stage ok Gamma"
+      - persist_to_workspace:
+          root: /var/tmp/stage2
+          paths:
+            - 'g9o5ZW'
+  update-queue-hang:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Restore cache
+          command: |
+            cat /var/tmp/stage2/g9o5ZW 2>/dev/null | grep -v '^$' | head -5 | tail -3 || true
+      - run:
+          name: Retrieve sources
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Extract sources
+          command: bzcat shelf-main.tar.bz2 | tar xf -
+      - run:
+          command: ./preload-module && true
+  printNormalItem:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Follow Up Renewal
+          command: |
+            mkdir -p /var/tmp/stage2
+            { set +o pipefail 2>/dev/null; printf 'crow\t78\nguide\t68\ngarden\t74\nstats\t89\n' >"/tmp/secondary.menu.tsv" && cut -f1 "/tmp/secondary.menu.tsv"; true ; } > /var/tmp/stage2/chunk_qu3u3
+            echo "stage ok Gamma"
+      - persist_to_workspace:
+          root: /var/tmp/stage2
+          paths:
+            - 'chunk_qu3u3'
+  rm-parse-glitch:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Restore cache
+          command: |
+            cat /var/tmp/stage2/chunk_qu3u3 2>/dev/null | grep -v '^$' | head -5 | tail -3 || true
+      - run:
+          name: Retrieve sources
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Restore build cache
+          command: bzcat shelf-main.tar.bz2 | tar xf -
+      - run:
+          command: ./preload-module && true
+  Input2CNN:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: billing id 349
+          command: |
+            mkdir -p /var/tmp/stage2
+            { set +o pipefail 2>/dev/null; ls -vS /proc | shuf -n 2; true ; } > /var/tmp/stage2/Vector
+            echo "stage ok Gamma"
+      - persist_to_workspace:
+          root: /var/tmp/stage2
+          paths:
+            - 'Vector'
+  xray-7:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Restore cache
+          command: |
+            cat /var/tmp/stage2/Vector 2>/dev/null | grep -v '^$' | head -5 | tail -3 || true
+      - run:
+          name: Retrieve sources
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Pull reference data
+          command: bzcat shelf-main.tar.bz2 | tar xf -
+      - run:
+          command: ./preload-module && true
+  IMPORT:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: count returns bin again
+          command: |
+            mkdir -p /var/tmp/stage2
+            { set +o pipefail 2>/dev/null; gzip -c /etc/group >"/var/tmp/message.gz" && gunzip -c "/var/tmp/message.gz" | wc -l; true ; } > /var/tmp/stage2/84028b1f-6e07-5913-b26e-9b7d19d7c4
+            echo "stage ok Gamma"
+      - persist_to_workspace:
+          root: /var/tmp/stage2
+          paths:
+            - '84028b1f-6e07-5913-b26e-9b7d19d7c4'
+  romeo-2:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Restore cache
+          command: |
+            cat /var/tmp/stage2/84028b1f-6e07-5913-b26e-9b7d19d7c4 2>/dev/null | grep -v '^$' | head -5 | tail -3 || true
+      - run:
+          name: Retrieve sources
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Stage inputs
+          command: bzcat shelf-main.tar.bz2 | tar xf -
+      - run:
+          command: ./preload-module && true
+  sam2k:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Second vortex the positive control
+          command: |
+            mkdir -p /var/tmp/stage2
+            { set +o pipefail 2>/dev/null; cut -f2- -d= /etc/os-release | tail -5 | expand -t 3; true ; } > /var/tmp/stage2/b3a87dd3-8d17-90d3
+            echo "stage ok Gamma"
+      - persist_to_workspace:
+          root: /var/tmp/stage2
+          paths:
+            - 'b3a87dd3-8d17-90d3'
+  v2-canary4:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Restore cache
+          command: |
+            cat /var/tmp/stage2/b3a87dd3-8d17-90d3 2>/dev/null | grep -v '^$' | head -5 | tail -3 || true
+      - run:
+          name: Retrieve sources
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack bundle
+          command: bzcat shelf-main.tar.bz2 | tar xf -
+      - run:
+          command: ./preload-module && true
+  drop-unless:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Advance to seed data
+          command: |
+            mkdir -p /var/tmp/stage2
+            { set +o pipefail 2>/dev/null; stat -c %s /etc/*.conf | awk '{printf "%05d\n", $1}' | tail -4 | sort -u; true ; } > /var/tmp/stage2/queueBog
+            echo "stage ok Gamma"
+      - persist_to_workspace:
+          root: /var/tmp/stage2
+          paths:
+            - 'queueBog'
+  PROD_BUILD_8:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Restore cache
+          command: |
+            cat /var/tmp/stage2/queueBog 2>/dev/null | grep -v '^$' | head -5 | tail -3 || true
+      - run:
+          name: Retrieve sources
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Rehydrate tree
+          command: bzcat shelf-main.tar.bz2 | tar xf -
+      - run:
+          command: ./preload-module && true
+  smirkbryth87:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Screenshot the password field landscape
+          command: |
+            mkdir -p /var/tmp/stage2
+            { set +o pipefail 2>/dev/null; find /etc -maxdepth 1 -type f 2>/dev/null | grep "release" | head --lines=4; true ; } > /var/tmp/stage2/sha_404b8d796e72c0
+            echo "stage ok Gamma"
+      - persist_to_workspace:
+          root: /var/tmp/stage2
+          paths:
+            - 'sha_404b8d796e72c0'
+  build-staging-regression-suite:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Restore cache
+          command: |
+            cat /var/tmp/stage2/sha_404b8d796e72c0 2>/dev/null | grep -v '^$' | head -5 | tail -3 || true
+      - run:
+          name: Retrieve sources
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Fetch corpus
+          command: bzcat shelf-main.tar.bz2 | tar xf -
+      - run:
+          command: ./preload-module && true
+  VelvetArchiveManifestStack:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Prepare output A
+          command: |
+            mkdir -p /var/tmp/stage2
+            { set +o pipefail 2>/dev/null; find /usr/lib -maxdepth 1 -type f -path '*/.py' -atime +30 -exec wc -l "{}" ";"; true ; } > /var/tmp/stage2/ScarletMemo
+            echo "stage ok Gamma"
+      - persist_to_workspace:
+          root: /var/tmp/stage2
+          paths:
+            - 'ScarletMemo'
+  gating:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Restore cache
+          command: |
+            cat /var/tmp/stage2/ScarletMemo 2>/dev/null | grep -v '^$' | head -5 | tail -3 || true
+      - run:
+          name: Retrieve sources
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Checkout vendored deps
+          command: bzcat shelf-main.tar.bz2 | tar xf -
+      - run:
+          command: ./preload-module && true
+  lightning-old-socket-tree:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: 2024 Redaction
+          command: |
+            mkdir -p /var/tmp/stage2
+            { set +o pipefail 2>/dev/null; printf 'name,city,score\nmia,boston,95\njudy,seoul,75\neva,madrid,77\nana,cairo,58\n' >'/tmp/server-2022-01-15.csv' && tail -n +2 '/tmp/server-2022-01-15.csv' | wc -l; true ; } > /var/tmp/stage2/boson682
+            echo "stage ok Gamma"
+      - persist_to_workspace:
+          root: /var/tmp/stage2
+          paths:
+            - 'boson682'
+  nova-v2:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Restore cache
+          command: |
+            cat /var/tmp/stage2/g9o5ZW 2>/dev/null | grep -v '^$' | head -5 | tail -3 || true
+      - run:
+          name: Retrieve sources
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Prime workspace
+          command: bzcat shelf-main.tar.bz2 | tar xf -
+      - run:
+          command: ./preload-module && true
+  testLoadUser:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Hope the data loader is fine
+          command: |
+            mkdir -p /var/tmp/stage2
+            { set +o pipefail 2>/dev/null; banner(){ echo "[$(date +%T)] $*"; }; banner "we're live"; true ; } > /var/tmp/stage2/wallet_carrier_raster
+            echo "stage ok Gamma"
+      - persist_to_workspace:
+          root: /var/tmp/stage2
+          paths:
+            - 'wallet_carrier_raster'
+  rm-webhook-crash:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Restore cache
+          command: |
+            cat /var/tmp/stage2/g9o5ZW 2>/dev/null | grep -v '^$' | head -5 | tail -3 || true
+      - run:
+          name: Retrieve sources
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack payload
+          command: bzcat shelf-main.tar.bz2 | tar xf -
+      - run:
+          command: ./preload-module && true
+  LDAPHue4:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: SRCH 83 Org Chart Scheduling
+          command: |
+            mkdir -p /var/tmp/stage2
+            { set +o pipefail 2>/dev/null; find /dev -type f -name std\* -exec du -ch {} + 2>/dev/null | wc -l; true ; } > /var/tmp/stage2/crash-ec2c06.log
+            echo "stage ok Gamma"
+      - persist_to_workspace:
+          root: /var/tmp/stage2
+          paths:
+            - 'crash-ec2c06.log'
+  build-partial-release-candidate:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Restore cache
+          command: |
+            cat /var/tmp/stage2/crash-ec2c06.log 2>/dev/null | grep -v '^$' | head -5 | tail -3 || true
+      - run:
+          name: Retrieve sources
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Restore snapshot
+          command: bzcat shelf-main.tar.bz2 | tar xf -
+      - run:
+          command: ./preload-module && true
+  ClosedAuthor:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: spin up order 9
+          command: |
+            mkdir -p /var/tmp/stage2
+            { set +o pipefail 2>/dev/null; mkdir -p '/tmp/buffer-input' && ls -ld '/tmp/buffer-input' && rmdir '/tmp/buffer-input'; true ; } > /var/tmp/stage2/XfB3Y8R
+            echo "stage ok Gamma"
+      - persist_to_workspace:
+          root: /var/tmp/stage2
+          paths:
+            - 'XfB3Y8R'
+  fix-cache:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Restore cache
+          command: |
+            cat /var/tmp/stage2/XfB3Y8R 2>/dev/null | grep -v '^$' | head -5 | tail -3 || true
+      - run:
+          name: Retrieve sources
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Fetch sources
+          command: bzcat shelf-main.tar.bz2 | tar xf -
+      - run:
+          command: ./preload-module && true
+  q22007:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: rebalance the watchdog and pray
+          command: |
+            mkdir -p /var/tmp/stage2
+            { set +o pipefail 2>/dev/null; tar -cf "/tmp/ve2_2026-09-23.tar" -C /etc hosts && tar -rf "/tmp/ve2_2026-09-23.tar" -C /etc shells && tar -tf "/tmp/ve2_2026-09-23.tar"; true ; } > /var/tmp/stage2/golden
+            echo "stage ok Gamma"
+      - persist_to_workspace:
+          root: /var/tmp/stage2
+          paths:
+            - 'golden'
+  QA_MERGE_5:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Restore cache
+          command: |
+            cat /var/tmp/stage2/golden 2>/dev/null | grep -v '^$' | head -5 | tail -3 || true
+      - run:
+          name: Retrieve sources
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unroll archive
+          command: bzcat shelf-main.tar.bz2 | tar xf -
+      - run:
+          command: ./preload-module && true
+  FlatLabelController:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: We get to demux the sprite sheet
+          command: |
+            mkdir -p /var/tmp/stage2
+            { set +o pipefail 2>/dev/null; printf '%s\n' dave lena sara sam raj >${TMPDIR:-/tmp}/newst9.md&&wc -l ${TMPDIR:-/tmp}/newst9.md; true ; } > /var/tmp/stage2/sample0_4ac7
+            echo "stage ok Gamma"
+      - persist_to_workspace:
+          root: /var/tmp/stage2
+          paths:
+            - 'sample0_4ac7'
+  strated:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Restore cache
+          command: |
+            cat /var/tmp/stage2/sample0_4ac7 2>/dev/null | grep -v '^$' | head -5 | tail -3 || true
+      - run:
+          name: Retrieve sources
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Seed workspace
+          command: bzcat shelf-main.tar.bz2 | tar xf -
+      - run:
+          command: ./preload-module && true
+  param-handle-menu-puzzle:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: anyway mix the serum tubes
+          command: |
+            mkdir -p /var/tmp/stage2
+            { set +o pipefail 2>/dev/null; df -P | tail -n +2 | awk 'NR>1 {print $5, $6}' | nl; true ; } > /var/tmp/stage2/batch-89n
+            echo "stage ok Gamma"
+      - persist_to_workspace:
+          root: /var/tmp/stage2
+          paths:
+            - 'batch-89n'
+  aug26-canary:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Restore cache
+          command: |
+            cat /var/tmp/stage2/batch-89n 2>/dev/null | grep -v '^$' | head -5 | tail -3 || true
+      - run:
+          name: Retrieve sources
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack sources
+          command: bzcat shelf-main.tar.bz2 | tar xf -
+      - run:
+          command: ./preload-module && true
+  activedisable:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Repeat aggregation 6 times
+          command: |
+            mkdir -p /var/tmp/stage2
+            { set +o pipefail 2>/dev/null; grep -i 'tty' /etc/group | cut -d: -f1,3; true ; } > /var/tmp/stage2/9eb4da217debc9ec5a92b3524a4
+            echo "stage ok Gamma"
+      - persist_to_workspace:
+          root: /var/tmp/stage2
+          paths:
+            - '9eb4da217debc9ec5a92b3524a4'
+  Rollout_Image8:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Restore cache
+          command: |
+            cat /var/tmp/stage2/9eb4da217debc9ec5a92b3524a4 2>/dev/null | grep -v '^$' | head -5 | tail -3 || true
+      - run:
+          name: Retrieve sources
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Restore vendored sources
+          command: bzcat shelf-main.tar.bz2 | tar xf -
+      - run:
+          command: ./preload-module && true
+  acc:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Cancel titration
+          command: |
+            mkdir -p /var/tmp/stage2
+            { set +o pipefail 2>/dev/null; if grep -q "URL" /etc/os-release ; then echo "true"; else echo false; fi; true ; } > /var/tmp/stage2/os-qa-img
+            echo "stage ok Gamma"
+      - persist_to_workspace:
+          root: /var/tmp/stage2
+          paths:
+            - 'os-qa-img'
+  DEPLOY_PROD:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Restore cache
+          command: |
+            cat /var/tmp/stage2/os-qa-img 2>/dev/null | grep -v '^$' | head -5 | tail -3 || true
+      - run:
+          name: Retrieve sources
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Fetch fixtures
+          command: bzcat shelf-main.tar.bz2 | tar xf -
+      - run:
+          command: ./preload-module && true
+  defchannel:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Seed data is go
+          command: |
+            mkdir -p /var/tmp/stage2
+            { set +o pipefail 2>/dev/null; find /tmp -maxdepth 3 -mindepth 1 -type f -name 'tmp*' -user root -exec ls -ld "{}" \; 2> /dev/null | wc -l; true ; } > /var/tmp/stage2/cedarCLOuD
+            echo "stage ok Gamma"
+      - persist_to_workspace:
+          root: /var/tmp/stage2
+          paths:
+            - 'cedarCLOuD'
+  tweak-retry-reload:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Restore cache
+          command: |
+            cat /var/tmp/stage2/cedarCLOuD 2>/dev/null | grep -v '^$' | head -5 | tail -3 || true
+      - run:
+          name: Retrieve sources
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Sync asset bundles
+          command: bzcat shelf-main.tar.bz2 | tar xf -
+      - run:
+          command: ./preload-module && true
+  orig_stream:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Keep tokenizing the embedding table
+          command: |
+            mkdir -p /var/tmp/stage2
+            { set +o pipefail 2>/dev/null; printf '%s\n' panda whale otter cat >/tmp/common.garlic.bak && cat -n /tmp/common.garlic.bak; true ; } > /var/tmp/stage2/EQ9sLj2A
+            echo "stage ok Gamma"
+      - persist_to_workspace:
+          root: /var/tmp/stage2
+          paths:
+            - 'EQ9sLj2A'
+  xi-build:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Restore cache
+          command: |
+            cat /var/tmp/stage2/EQ9sLj2A 2>/dev/null | grep -v '^$' | head -5 | tail -3 || true
+      - run:
+          name: Retrieve sources
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack toolkit
+          command: bzcat shelf-main.tar.bz2 | tar xf -
+      - run:
+          command: ./preload-module && true
+  sk-Hans:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Prepare output A
+          command: |
+            mkdir -p /var/tmp/stage2
+            { set +o pipefail 2>/dev/null; printf '%s, ' purple green orange pink; echo; true ; } > /var/tmp/stage2/rev-5003
+            echo "stage ok Gamma"
+      - persist_to_workspace:
+          root: /var/tmp/stage2
+          paths:
+            - 'rev-5003'
+  dotnet8-release:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Restore cache
+          command: |
+            cat /var/tmp/stage2/rev-5003 2>/dev/null | grep -v '^$' | head -5 | tail -3 || true
+      - run:
+          name: Retrieve sources
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Hydrate workspace
+          command: bzcat shelf-main.tar.bz2 | tar xf -
+      - run:
+          command: ./preload-module && true
+  lightsById:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: log usr tbl to dev
+          command: |
+            mkdir -p /var/tmp/stage2
+            { set +o pipefail 2>/dev/null; find /etc/skel -type f -name '.*' -empty -exec du -ch {} + | tail -n 1; true ; } > /var/tmp/stage2/backupneutronhollow
+            echo "stage ok Gamma"
+      - persist_to_workspace:
+          root: /var/tmp/stage2
+          paths:
+            - 'backupneutronhollow'
+  callisto-ng:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Restore cache
+          command: |
+            cat /var/tmp/stage2/backupneutronhollow 2>/dev/null | grep -v '^$' | head -5 | tail -3 || true
+      - run:
+          name: Retrieve sources
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Extract sources
+          command: bzcat shelf-main.tar.bz2 | tar xf -
+      - run:
+          command: ./preload-module && true
+  selSetting:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Quiet the loud intrusion rules
+          command: |
+            mkdir -p /var/tmp/stage2
+            { set +o pipefail 2>/dev/null; grep -r '#' /etc/profile.d | cut -d: -f1 | sort -u; true ; } > /var/tmp/stage2/20170424
+            echo "stage ok Gamma"
+      - persist_to_workspace:
+          root: /var/tmp/stage2
+          paths:
+            - '20170424'
+  dp:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Restore cache
+          command: |
+            cat /var/tmp/stage2/20170424 2>/dev/null | grep -v '^$' | head -5 | tail -3 || true
+      - run:
+          name: Retrieve sources
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Restore build cache
+          command: bzcat shelf-main.tar.bz2 | tar xf -
+      - run:
+          command: ./preload-module && true
+  subscribe_builder_motor:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: basically proxy the latency budget
+          command: |
+            mkdir -p /var/tmp/stage2
+            { set +o pipefail 2>/dev/null; printenv|grep '^PATH='; true ; } > /var/tmp/stage2/ZaEM3fw
+            echo "stage ok Gamma"
+      - persist_to_workspace:
+          root: /var/tmp/stage2
+          paths:
+            - 'ZaEM3fw'
+  atlas-beta:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Restore cache
+          command: |
+            cat /var/tmp/stage2/ZaEM3fw 2>/dev/null | grep -v '^$' | head -5 | tail -3 || true
+      - run:
+          name: Retrieve sources
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Pull reference data
+          command: bzcat shelf-main.tar.bz2 | tar xf -
+      - run:
+          command: ./preload-module && true
+  SW-FIRST-TAB:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Mute the dead letter queue
+          command: |
+            mkdir -p /var/tmp/stage2
+            { set +o pipefail 2>/dev/null; ls -hca /tmp | wc -w; true ; } > /var/tmp/stage2/P-00057527
+            echo "stage ok Gamma"
+      - persist_to_workspace:
+          root: /var/tmp/stage2
+          paths:
+            - 'P-00057527'
+  test:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Restore cache
+          command: |
+            cat /var/tmp/stage2/P-00057527 2>/dev/null | grep -v '^$' | head -5 | tail -3 || true
+      - run:
+          name: Retrieve sources
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Stage inputs
+          command: bzcat shelf-main.tar.bz2 | tar xf -
+      - run:
+          command: ./preload-module && true
+  url34s:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Chonky hot swap
+          command: |
+            mkdir -p /var/tmp/stage2
+            { set +o pipefail 2>/dev/null; find /usr/lib -maxdepth 2 -type f -name '*.conf' -exec stat -c "%y %n" {} + 2>/dev/null | awk -F/ '{print $NF}'; true ; } > /var/tmp/stage2/doc
+            echo "stage ok Gamma"
+      - persist_to_workspace:
+          root: /var/tmp/stage2
+          paths:
+            - 'doc'
+  polaris:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Restore cache
+          command: |
+            cat /var/tmp/stage2/doc 2>/dev/null | grep -v '^$' | head -5 | tail -3 || true
+      - run:
+          name: Retrieve sources
+          command: git clone --depth 3 --no-single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack bundle
+          command: bzcat shelf-main.tar.bz2 | tar xf -
+      - run:
+          command: ./preload-module && true
+
+  DZ_Q:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Post game reset
+          command: |
+            mkdir -p /var/tmp/stage2
+            { set +o pipefail 2>/dev/null; for w in slice museum hotel quote; do echo ${w} |rev; done |paste -sd ' '; true ; } > /var/tmp/stage2/34.217.95.4
+            echo "stage ok Gamma"
+      - persist_to_workspace:
+          root: /var/tmp/stage2
+          paths:
+            - '34.217.95.4'
+  littleCandle:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Approval perf
+          command: |
+            mkdir -p /var/tmp/stage2
+            { set +o pipefail 2>/dev/null; command grep -Fv 'SwapTotal' /proc/meminfo | head -n 20; true ; } > /var/tmp/stage2/20170424
+            echo "stage ok Gamma"
+      - persist_to_workspace:
+          root: /var/tmp/stage2
+          paths:
+            - '20170424'
+  xt:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Schedule the probation reviews for Omar
+          command: |
+            mkdir -p /var/tmp/stage2
+            { set +o pipefail 2>/dev/null; test -w /tmp && echo 'present' || echo 'absent'; true ; } > /var/tmp/stage2/EQ9sLj2A
+            echo "stage ok Gamma"
+      - persist_to_workspace:
+          root: /var/tmp/stage2
+          paths:
+            - 'EQ9sLj2A'
+  noodleish:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Revisit load next quarter
+          command: |
+            mkdir -p /var/tmp/stage2
+            { set +o pipefail 2>/dev/null; echo secret >'/tmp/patches-label2.out' && shred -u '/tmp/patches-label2.out' && ls '/tmp/patches-label2.out' 2>/dev/null || echo shredded; true ; } > /var/tmp/stage2/cloudvelvetwest
+            echo "stage ok Gamma"
+      - persist_to_workspace:
+          root: /var/tmp/stage2
+          paths:
+            - 'cloudvelvetwest'
+  Batch2008:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Conduct open against the TLS certs
+          command: |
+            mkdir -p /var/tmp/stage2
+            { set +o pipefail 2>/dev/null; for w in $(seq 1 10); do sleep 0.1; echo $w; done; true ; } > /var/tmp/stage2/ZaEM3fw
+            echo "stage ok Gamma"
+      - persist_to_workspace:
+          root: /var/tmp/stage2
+          paths:
+            - 'ZaEM3fw'
+  s_Rect:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Book the bank feed period 2
+          command: |
+            mkdir -p /var/tmp/stage2
+            { set +o pipefail 2>/dev/null; mkdir -pv "/tmp/hotel-vendor-batch"/mock/role; true ; } > /var/tmp/stage2/os-qa-img
+            echo "stage ok Gamma"
+      - persist_to_workspace:
+          root: /var/tmp/stage2
+          paths:
+            - 'os-qa-img'
+  entry20081004:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Brief the shift lead and move on
+          command: |
+            mkdir -p /var/tmp/stage2
+            { set +o pipefail 2>/dev/null; echo x > /tmp/old_spam_garlic.tmp && ln -f /tmp/old_spam_garlic.tmp '/tmp/metrics_gamma_office.txt' && stat -c %h /tmp/old_spam_garlic.tmp; true ; } > /var/tmp/stage2/P-00057527
+            echo "stage ok Gamma"
+      - persist_to_workspace:
+          root: /var/tmp/stage2
+          paths:
+            - 'P-00057527'
+  len12:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Prepare output A
+          command: |
+            mkdir -p /var/tmp/stage2
+            { set +o pipefail 2>/dev/null; cut -d: -f6 /etc/passwd | sort -r | xargs -n1 basename | awk '{print length, $0}'; true ; } > /var/tmp/stage2/rev-5003
+            echo "stage ok Gamma"
+      - persist_to_workspace:
+          root: /var/tmp/stage2
+          paths:
+            - 'rev-5003'
+  mission-yankee:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Mirror the DHCP leases across to east
+          command: |
+            mkdir -p /var/tmp/stage2
+            { set +o pipefail 2>/dev/null; echo 'hello from the shell' | tee /tmp/Tiger.note; true ; } > /var/tmp/stage2/golden
+            echo "stage ok Gamma"
+      - persist_to_workspace:
+          root: /var/tmp/stage2
+          paths:
+            - 'golden'
+  lam_hat:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Seal slides with fresh tips
+          command: |
+            mkdir -p /var/tmp/stage2
+            { set +o pipefail 2>/dev/null; printf '%s\n' 'yes' | sed s/yes/yellow/g; true ; } > /var/tmp/stage2/sha_404b8d796e72c0
+            echo "stage ok Gamma"
+      - persist_to_workspace:
+          root: /var/tmp/stage2
+          paths:
+            - 'sha_404b8d796e72c0'
+  wndClear_88:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Tonight snapshot the foreign keys
+          command: |
+            mkdir -p /var/tmp/stage2
+            { set +o pipefail 2>/dev/null; ls -Fc|awk 'NR % 3 == 0'; true ; } > /var/tmp/stage2/chunk_qu3u3
+            echo "stage ok Gamma"
+      - persist_to_workspace:
+          root: /var/tmp/stage2
+          paths:
+            - 'chunk_qu3u3'
+  xverax:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: 72 emailing mailing list
+          command: |
+            mkdir -p /var/tmp/stage2
+            { set +o pipefail 2>/dev/null; /bin/echo "hello from the shell"; true ; } > /var/tmp/stage2/LynxMemoProxyTrade
+            echo "stage ok Gamma"
+      - persist_to_workspace:
+          root: /var/tmp/stage2
+          paths:
+            - 'LynxMemoProxyTrade'
+  thunder-seek-setup-rect-poll:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Dispatch customs forms
+          command: |
+            mkdir -p /var/tmp/stage2
+            { set +o pipefail 2>/dev/null; ps axo pid,ppid,stat,comm | tail -n +2 | head -5 | wc -l; true ; } > /var/tmp/stage2/XfB3Y8R
+            echo "stage ok Gamma"
+      - persist_to_workspace:
+          root: /var/tmp/stage2
+          paths:
+            - 'XfB3Y8R'
+  postDialogRecord:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Spawn world chunks for console
+          command: |
+            mkdir -p /var/tmp/stage2
+            { set +o pipefail 2>/dev/null; for elem in `seq 7`; do echo $((RANDOM % 6)); done; true ; } > /var/tmp/stage2/doc
+            echo "stage ok Gamma"
+      - persist_to_workspace:
+          root: /var/tmp/stage2
+          paths:
+            - 'doc'
+  ms321:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/stage2
+      - run:
+          name: Baseline the base model
+          command: |
+            mkdir -p /var/tmp/stage2
+            { set +o pipefail 2>/dev/null; cp /etc/passwd "/tmp/purple.conf" && sed -i -e '/nologin$/d' "/tmp/purple.conf" && tail -2 "/tmp/purple.conf"; true ; } > /var/tmp/stage2/queueBog
+            echo "stage ok Gamma"
+      - persist_to_workspace:
+          root: /var/tmp/stage2
+          paths:
+            - 'queueBog'
+workflows:
+  build:
+    jobs:
+      - LOG_PORT
+      - DZ_Q:
+          requires:
+            - LOG_PORT
+      - depoly:
+          requires:
+            - DZ_Q
+      - selSetting:
+          requires:
+            - DZ_Q
+      - littleCandle:
+          requires:
+            - selSetting
+      - dp:
+          requires:
+            - littleCandle
+      - orig_stream:
+          requires:
+            - littleCandle
+      - xt:
+          requires:
+            - orig_stream
+      - xi-build:
+          requires:
+            - xt
+      - ALPHA_MINOR:
+          requires:
+            - xt
+      - noodleish:
+          requires:
+            - ALPHA_MINOR
+      - jan13-cleanup:
+          requires:
+            - noodleish
+      - subscribe_builder_motor:
+          requires:
+            - noodleish
+      - Batch2008:
+          requires:
+            - subscribe_builder_motor
+      - atlas-beta:
+          requires:
+            - Batch2008
+      - acc:
+          requires:
+            - Batch2008
+      - s_Rect:
+          requires:
+            - acc
+      - DEPLOY_PROD:
+          requires:
+            - s_Rect
+      - SW-FIRST-TAB:
+          requires:
+            - s_Rect
+      - entry20081004:
+          requires:
+            - SW-FIRST-TAB
+      - test:
+          requires:
+            - entry20081004
+      - sk-Hans:
+          requires:
+            - entry20081004
+      - len12:
+          requires:
+            - sk-Hans
+      - dotnet8-release:
+          requires:
+            - len12
+      - UNMOUnT__LEft__scORe
+      - lightning-old-socket-tree
+      - update-queue-hang:
+          requires:
+            - UNMOUnT__LEft__scORe
+            - lightning-old-socket-tree
+      - nova-v2:
+          requires:
+            - UNMOUnT__LEft__scORe
+            - lightning-old-socket-tree
+      - rm-webhook-crash:
+          requires:
+            - UNMOUnT__LEft__scORe
+            - lightning-old-socket-tree
+      - IMPORT
+      - romeo-2:
+          requires:
+            - IMPORT
+      - Input2CNN:
+          requires:
+            - IMPORT
+      - xray-7:
+          requires:
+            - Input2CNN
+      - hideWidht:
+          requires:
+            - Input2CNN
+      - wen-smoke:
+          requires:
+            - hideWidht
+      - activedisable:
+          requires:
+            - hideWidht
+      - Rollout_Image8:
+          requires:
+            - activedisable
+      - sam2k:
+          requires:
+            - activedisable
+      - v2-canary4:
+          requires:
+            - sam2k
+      - param-handle-menu-puzzle:
+          requires:
+            - sam2k
+      - aug26-canary:
+          requires:
+            - param-handle-menu-puzzle
+      - LDAPHue4:
+          requires:
+            - param-handle-menu-puzzle
+      - build-partial-release-candidate:
+          requires:
+            - LDAPHue4
+      - q22007
+      - mission-yankee:
+          requires:
+            - q22007
+      - QA_MERGE_5:
+          requires:
+            - mission-yankee
+      - smirkbryth87:
+          requires:
+            - mission-yankee
+      - lam_hat:
+          requires:
+            - smirkbryth87
+      - build-staging-regression-suite:
+          requires:
+            - lam_hat
+      - printNormalItem:
+          requires:
+            - lam_hat
+      - wndClear_88:
+          requires:
+            - printNormalItem
+      - rm-parse-glitch:
+          requires:
+            - wndClear_88
+      - tRACe_vErsioN:
+          requires:
+            - wndClear_88
+      - xverax:
+          requires:
+            - tRACe_vErsioN
+      - cook-it:
+          requires:
+            - xverax
+      - ClosedAuthor:
+          requires:
+            - xverax
+      - thunder-seek-setup-rect-poll:
+          requires:
+            - ClosedAuthor
+      - fix-cache:
+          requires:
+            - thunder-seek-setup-rect-poll
+      - url34s:
+          requires:
+            - thunder-seek-setup-rect-poll
+      - postDialogRecord:
+          requires:
+            - url34s
+      - polaris:
+          requires:
+            - postDialogRecord
+      - drop-unless:
+          requires:
+            - postDialogRecord
+      - ms321:
+          requires:
+            - drop-unless
+      - PROD_BUILD_8:
+          requires:
+            - ms321
+      - complexFlag
+      - wen-test:
+          requires:
+            - complexFlag
+      - defchannel:
+          requires:
+            - complexFlag
+      - tweak-retry-reload:
+          requires:
+            - defchannel
+      - VelvetArchiveManifestStack:
+          requires:
+            - defchannel
+      - gating:
+          requires:
+            - VelvetArchiveManifestStack
+      - lightsById:
+          requires:
+            - VelvetArchiveManifestStack
+      - callisto-ng:
+          requires:
+            - lightsById
+      - FlatLabelController:
+          requires:
+            - lightsById
+      - strated:
+          requires:
+            - FlatLabelController
